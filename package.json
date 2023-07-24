@@ -1,0 +1,19 @@
+{
+  "name": "securitize-digital-wallet-dashboard",
+  "version": "1.0.0",
+  "description": "Securitize Full Stack Developer Challenge",
+  "main": "index.js",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "start": "node apps/api/dist/main.js"
+  },
+  "author": "Matias Sartori",
+  "license": "ISC",
+  "workspaces": [
+    "apps/*"
+  ],
+  "dependencies": {
+    "turbo": "^1.10.9"
+  }
+}
