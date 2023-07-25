@@ -1,1 +1,5 @@
-export class CreateExchangeDto {}
+export class CreateExchangeDto {
+  eth?: number;
+  dollar?: number;
+  euro?: number;
+}

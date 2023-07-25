@@ -18,12 +18,10 @@ export class WalletsController {
     return this.walletsService.findAll();
   }
 
-  // @Get('balance/:address')
-  // getBalance(@Param('address') address: string) {
-  //   return this.walletsService.getBalance(address);
-  // }
-
-
+  @Get('balance/:address')
+  getBalance(@Param('address') address: string) {
+    return this.walletsService.getBalance(address);
+  }
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.walletsService.findOne(+id);

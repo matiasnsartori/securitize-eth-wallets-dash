@@ -1,17 +1,12 @@
-import "./App.css";
-import Button from '@mui/material/Button';
+import Wallets from "./components/wallets";
+import AppNavbar from "./components/appBar";
 
 function App() {
-  const handleClick = async () => {
-    const response = await fetch("/api/wallets");
-    const data = await response.json();
-    console.log(data);
-  };
-
   return (
-    <>
-      <Button variant="outlined" onClick={handleClick}>click me</Button>
-    </>
+    <div style={{ maxWidth: "70%", margin: "auto" }}>
+      <AppNavbar />
+      <Wallets />
+    </div>
   );
 }
 

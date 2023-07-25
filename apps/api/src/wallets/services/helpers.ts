@@ -5,3 +5,8 @@ export const isOldWallet = (timestamp: number): boolean => {
   
     return firstTransactionDate < oneYearAgoDate;
   }
+
+  export const weiToEth = (wei: number): number => {
+    const etherAmount = wei / 10 ** 18;
+    return etherAmount;
+  };

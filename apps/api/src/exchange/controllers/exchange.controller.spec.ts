@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ExchangeController } from './exchange.controller';
-import { ExchangeService } from './exchange.service';
+import { ExchangeService } from './services/exchange.service';
 
 describe('ExchangeController', () => {
   let controller: ExchangeController;

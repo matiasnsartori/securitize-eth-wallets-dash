@@ -25,7 +25,6 @@ export class Wallet {
     @Column()
     favorite: boolean;
 
-    @IsNotEmpty()
     @IsBoolean()
     @Column({default: false})
     isOld?: boolean;

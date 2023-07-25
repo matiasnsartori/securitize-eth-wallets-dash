@@ -1,22 +1,20 @@
 import { IsBoolean, IsNotEmpty, IsNumber, IsString } from "class-validator";
-import { Column, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Generated, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity()
 export class Exchange {
-    @PrimaryGeneratedColumn()
-    id: number;
-    
-    @IsNotEmpty()
-    @IsNumber()
-    @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
-    eth: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @IsNotEmpty()
-    @IsNumber()
-    @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
-    dollar: number;
+  @IsNumber()
+  @Column({ default: 0, type: 'decimal', precision: 10, scale: 2 })
+  eth: number = 0;
 
-    @IsNotEmpty()
-    @IsNumber()
-    @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
-    euro: number;
+  @IsNumber()
+  @Column({ default: 0, type: 'decimal', precision: 10, scale: 2 })
+  usd: number = 0;
+
+  @IsNumber()
+  @Column({ default: 0, type: 'decimal', precision: 10, scale: 2 })
+  euro: number = 0;
 }
