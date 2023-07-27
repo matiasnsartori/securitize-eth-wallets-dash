@@ -4,6 +4,7 @@ export interface IWallet {
   name: string;
   isOld: boolean;
   favorite: boolean;
+  balance: number;
 }
 
 export interface CreateWalletDto {

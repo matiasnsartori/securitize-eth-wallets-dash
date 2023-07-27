@@ -3,7 +3,7 @@ import AppNavbar from "./components/appBar";
 
 function App() {
   return (
-    <div style={{ maxWidth: "70%", margin: "auto" }}>
+    <div style={{ maxWidth: "60%", margin: "auto" }}>
       <AppNavbar />
       <Wallets />
     </div>

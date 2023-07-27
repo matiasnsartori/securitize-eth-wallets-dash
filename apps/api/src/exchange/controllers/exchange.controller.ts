@@ -21,8 +21,8 @@ export class ExchangeController {
   }
 
   @Get('rates')
-  ethUsd() {
-    return this.exchangeService.ethUsdPrice();
+  getRates() {
+    return this.exchangeService.getRates();
   }
 
   @Get('stored/rates')

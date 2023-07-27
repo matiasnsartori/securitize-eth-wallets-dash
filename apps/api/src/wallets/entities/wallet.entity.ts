@@ -3,29 +3,34 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Wallet {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @IsNotEmpty()
-    @IsString()
-    @Column({
-        unique: true
-    })
-    name: string;
+  @IsNotEmpty()
+  @IsString()
+  @Column({
+    unique: true,
+  })
+  name: string;
 
-    @IsNotEmpty()
-    @IsString()
-    @Column({
-        unique: true
-    })
-    address: string;
+  @IsNotEmpty()
+  @IsString()
+  @Column({
+    unique: true,
+  })
+  address: string;
 
-    @IsNotEmpty()
-    @IsBoolean()
-    @Column()
-    favorite: boolean;
+  @IsNotEmpty()
+  @IsBoolean()
+  @Column()
+  favorite: boolean;
 
-    @IsBoolean()
-    @Column({default: false})
-    isOld?: boolean;
+  @IsNotEmpty()
+  @IsNumber()
+  @Column({ default: 0 })
+  balance: number;
+
+  @IsBoolean()
+  @Column({ default: false })
+  isOld?: boolean;
 }

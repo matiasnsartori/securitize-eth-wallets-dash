@@ -21,6 +21,7 @@ export class WalletsService {
   ) {}
 
   async create(createWalletDto: CreateWalletDto) {
+    console.log({ createWalletDto });
     await etherscanInstance
       .get('api', {
         params: {
@@ -33,7 +34,8 @@ export class WalletsService {
           apikey: process.env.ETHERSCAN_API_KEY,
         },
       })
-      .then((res) => {
+      .then(async (res) => {
+        console.log('llego al wallet');
         if (res.data.result.length > 0) {
           const firstTransaction = res.data.result[0].timeStamp;
           createWalletDto.isOld = isOldWallet(firstTransaction);
@@ -48,14 +50,20 @@ export class WalletsService {
     const res = await etherscanInstance.get('api', {
       params: {
         module: 'account',
-        action: 'balance',
+        action: 'balancemulti',
         address,
         tag: 'latest',
         apikey: process.env.ETHERSCAN_API_KEY,
       },
     });
-    console.log(res.data.result);
-    return weiToEth(res.data.result);
+    if(typeof res.data.result  === 'object'){
+      return res.data.result.map((wallet) => {
+        return {
+          ...wallet,
+          balance: weiToEth(wallet.balance),
+        };
+      });
+    }
   }
 
   findAll() {
