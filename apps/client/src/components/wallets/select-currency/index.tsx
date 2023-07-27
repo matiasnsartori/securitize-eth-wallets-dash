@@ -22,7 +22,7 @@ const SelectCurrency: FC<SelectCurrencyProps> = ({ wallet }) => {
   const [userRate, setUserRate] = useState(0);
 
   const { refetch } = useQuery(
-    `balance-${wallet.address}`,
+    `balance-${wallet.id}`,
     () => getBalance(wallet.address),
     { enabled: false }
   );

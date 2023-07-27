@@ -15,6 +15,7 @@ const Topbar = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 1rem;
+  align-items: center;
 `;
 
 const ButtonsContainer = styled.div`

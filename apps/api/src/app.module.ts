@@ -13,7 +13,7 @@ import { dataSourceOptions } from 'db/data-source';
     ExchangeModule,
     WalletsModule,
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '../../', 'client/dist'),
+      rootPath: join(__dirname, '../../../', 'client/dist'),
     }),
   ],
 })

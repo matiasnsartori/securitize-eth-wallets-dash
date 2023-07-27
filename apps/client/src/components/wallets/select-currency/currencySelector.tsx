@@ -31,7 +31,7 @@ const CurrencySelector: FC<CurrencySelectorProps> = ({
       <Topbar>
         <h3>Edit Exchange Rate</h3>
         {editUserCurrency ? (
-          <>
+          <div>
             <Button color="error" onClick={onEditUserCurrency}>
               <CloseIcon />
             </Button>
@@ -39,7 +39,7 @@ const CurrencySelector: FC<CurrencySelectorProps> = ({
             <Button color="success" onClick={onSaveUserRates}>
               <CheckIcon />
             </Button>
-          </>
+          </div>
         ) : (
           <Button onClick={onEditUserCurrency}>
             <ModeEditIcon />
@@ -54,11 +54,13 @@ const CurrencySelector: FC<CurrencySelectorProps> = ({
           onChange={(e) => onUserRateChange(+e.target.value)}
         />
       ) : (
-        <span>
-          {`${currency} Rate: ${
-            currency === "Usd" ? usdRate : currency === "Euro" ? euroRate : 1
-          }`}
-        </span>
+        <div>
+          <h3>
+            {`${currency} Rate: ${
+              currency === "Usd" ? usdRate : currency === "Euro" ? euroRate : 1
+            }`}
+          </h3>
+        </div>
       )}
     </InfoBox>
   );

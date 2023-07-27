@@ -6,7 +6,9 @@ import { TWallets } from "./types";
 import WalletsTable from "./wallets-table";
 import { useQuery, useMutation } from "react-query";
 import { createWallet, getWallets } from "../../api/wallets";
-import { Button } from "@mui/material";
+import { Alert, Button, Snackbar } from "@mui/material";
+import StarIcon from "@mui/icons-material/Star";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
 
 interface walletsProps {}
 
@@ -24,12 +26,14 @@ const sortWalletsByFavorite = (wallets: TWallets) => {
 
 const Wallets: FC<walletsProps> = ({}) => {
   const [showSortedWallets, setShowSortedWallets] = useState(false);
+  const [open, setOpen] = useState(false);
+
   const { isLoading, data: walletsData } = useQuery<TWallets>(
     "wallets",
     getWallets
   );
 
-  const { mutate } = useMutation(createWallet);
+  let { mutate, isSuccess } = useMutation(createWallet);
 
   const handleSubmit = async (
     address: string,
@@ -39,6 +43,7 @@ const Wallets: FC<walletsProps> = ({}) => {
     if (!validateAddress(address)) {
       return;
     }
+    setOpen(true);
     const data = { address, name, favorite };
     mutate(data);
   };
@@ -51,11 +56,23 @@ const Wallets: FC<walletsProps> = ({}) => {
         {!isLoading && walletsData ? (
           <>
             <Button
+              style={{ marginTop: "1.5rem" }}
               variant="contained"
               onClick={() => setShowSortedWallets(!showSortedWallets!)}
+              endIcon={showSortedWallets ? <StarIcon /> : <StarBorderIcon />}
             >
               Sort by favorite
             </Button>
+
+            <Snackbar
+              open={isSuccess && open}
+              autoHideDuration={2000}
+              onClose={() => setOpen(false)}
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            >
+              <Alert severity="success">Wallet Added!</Alert>
+            </Snackbar>
+
             <WalletsTable
               wallets={
                 showSortedWallets
