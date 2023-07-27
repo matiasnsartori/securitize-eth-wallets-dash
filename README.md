@@ -9,7 +9,7 @@ Node.js and npm (Node Package Manager) installed.
 Getting Started
 To use this project, follow the steps below:
 
-Clone the repository to your local machine using the following command:
+Clone the repository to your local machine.
 
 Step 1: Launch the PostgreSQL database using Docker Compose:
 
