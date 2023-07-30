@@ -10,12 +10,13 @@ const InfoBox = styled.div`
   padding: 1rem;
 `;
 
-const Topbar = styled.div`
+
+const Topbar = styled.div<{ centered?: boolean }>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 1rem;
-  align-items: center;
+  align-items: ${({ centered }) => (centered ? "center" : "inherit")};
 `;
 
 const ButtonsContainer = styled.div`
@@ -75,6 +76,52 @@ const WalletHeader = styled.div`
   justify-content: space-between;
 `;
 
+const ModalOptionButtons = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const ModalCloseButton = styled.div`
+  align-self: end;
+`;
+
+const ModalContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+  height: 19rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background-color: #ffffff;
+  border: 2px solid #0000004b;
+  border-radius: 1rem;
+  box-shadow: 24px;
+  padding: 1rem;
+`;
+const ModalCloseButtons = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
+const OptionButtons = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 1rem;
+`;
+
+const ModalBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem 0;
+`;
+
 export {
   InfoBox,
   Topbar,
@@ -86,4 +133,10 @@ export {
   WalletInfo,
   CustomAlert,
   WalletHeader,
+  ModalOptionButtons,
+  ModalCloseButton,
+  ModalContainer,
+  ModalCloseButtons,
+  OptionButtons,
+  ModalBody,
 };

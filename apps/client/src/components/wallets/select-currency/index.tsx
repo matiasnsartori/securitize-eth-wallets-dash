@@ -1,11 +1,11 @@
 import { FC, useState } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { getBalance } from "../../../api/wallets";
-import { IWallet } from "../types";
-import { getUsdRate } from "../../../api/exchange";
+import { Currency, IWallet } from "../types";
+import { deleteWallet, getUsdRate } from "../../../api/exchange";
 import { SelectChangeEvent } from "@mui/material";
 import WalletBalanceDisplay from "./walletBalanceDisplay";
-import CurrencySelector from "./currencySelector";
+import EditExchangeRate from "./editExchangeRate";
 
 interface SelectCurrencyProps {
   wallet: IWallet;
@@ -15,18 +15,27 @@ const SelectCurrency: FC<SelectCurrencyProps> = ({ wallet }) => {
   const [showBalance, setShowBalance] = useState(false);
   const [balance, setBalance] = useState(0);
   const [exchangeRate, setExchangeRate] = useState(1);
-  const [usdRate, setUsdRate] = useState(0);
-  const [euroRate, setEuroRate] = useState(0);
-  const [currency, setCurrency] = useState<"Usd" | "Euro" | "">("");
+  const [usdRate, setUsdRate] = useState(
+    localStorage.getItem("usdUserRate") || 1
+  );
+  const [euroRate, setEuroRate] = useState(
+    localStorage.getItem("euroUserRate") || 1
+  );
+  const [currency, setCurrency] = useState<Currency>("ETH");
   const [editUserCurrency, setEditUserCurrency] = useState(false);
   const [userRate, setUserRate] = useState(0);
+  const [wantToDelete, setWantToDelete] = useState(false);
 
-  const { refetch } = useQuery(
+  const { refetch, isLoading } = useQuery(
     `balance-${wallet.id}`,
     () => getBalance(wallet.address),
     { enabled: false }
   );
-  const { refetch: rates } = useQuery(`rates`, getUsdRate, { enabled: false });
+  const { refetch: rates, isLoading: loadingRates } = useQuery(
+    `rates`,
+    getUsdRate,
+    { enabled: false }
+  );
 
   const handleShowBalance = async () => {
     if (showBalance || balance !== 0) {
@@ -35,20 +44,21 @@ const SelectCurrency: FC<SelectCurrencyProps> = ({ wallet }) => {
       const balance = await refetch();
       if (balance.data !== "") {
         setBalance(balance.data[0].balance);
+
         setShowBalance(true);
       }
     }
   };
 
   const handleChange = async (event: SelectChangeEvent) => {
-    setCurrency(event.target.value as "Usd" | "Euro" | "");
+    setCurrency(event.target.value as Currency);
     if (event.target.value === "Usd") {
-      setExchangeRate(usdRate);
+      setExchangeRate(+usdRate);
     }
     if (event.target.value === "Euro") {
-      setExchangeRate(euroRate);
+      setExchangeRate(+euroRate);
     }
-    if (event.target.value === "") {
+    if (event.target.value === "ETH") {
       setExchangeRate(1);
     }
   };
@@ -91,16 +101,18 @@ const SelectCurrency: FC<SelectCurrencyProps> = ({ wallet }) => {
 
   return (
     <>
-      <CurrencySelector
+      <EditExchangeRate
         currency={currency}
-        usdRate={usdRate}
-        euroRate={euroRate}
+        usdRate={+usdRate}
+        euroRate={+euroRate}
         editUserCurrency={editUserCurrency}
         userRate={userRate}
         onCurrencyChange={handleChange}
         onEditUserCurrency={() => setEditUserCurrency(!editUserCurrency)}
         onSaveUserRates={saveUserRates}
         onUserRateChange={(value) => setUserRate(value)}
+        loadingRates={loadingRates}
+        walletId={wallet.id}
       />
       <WalletBalanceDisplay
         currency={currency}
@@ -109,8 +121,9 @@ const SelectCurrency: FC<SelectCurrencyProps> = ({ wallet }) => {
         balance={balance}
         onShowBalance={handleShowBalance}
         handleChange={handleChange}
-        useActualRates={useActualRates}
         useUserRates={useUserRates}
+        isLoading={isLoading}
+        getCurrentRates={useActualRates}
       />
     </>
   );

@@ -48,6 +48,11 @@ const Wallets: FC<walletsProps> = ({}) => {
     mutate(data);
   };
 
+  const onWalletAdded = () => {
+    setOpen(false);
+    window.location.reload();
+  };
+
   if (!isLoading) {
     return (
       <>
@@ -67,8 +72,8 @@ const Wallets: FC<walletsProps> = ({}) => {
             <Snackbar
               open={isSuccess && open}
               autoHideDuration={2000}
-              onClose={() => setOpen(false)}
-              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              onClose={onWalletAdded}
+              anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
               <Alert severity="success">Wallet Added!</Alert>
             </Snackbar>

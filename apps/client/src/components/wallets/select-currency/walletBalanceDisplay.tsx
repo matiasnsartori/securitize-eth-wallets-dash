@@ -1,5 +1,11 @@
 import { FC } from "react";
-import { Button, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
@@ -10,15 +16,17 @@ import {
   InfoBox,
   Topbar,
 } from "../wallets-table/styled";
+import { Currency } from "../types";
 
 interface WalletBalanceDisplayProps {
-  currency: "Usd" | "Euro" | "";
+  currency: Currency;
   exchangeRate: number;
   showBalance: boolean;
   balance: number;
-  onShowBalance: () => void;
+  isLoading: boolean;
+  onShowBalance: () => Promise<void>;
   handleChange: (event: SelectChangeEvent) => Promise<void>;
-  useActualRates: () => Promise<void>;
+  getCurrentRates: () => Promise<void>;
   useUserRates: () => Promise<void>;
 }
 
@@ -27,9 +35,10 @@ const WalletBalanceDisplay: FC<WalletBalanceDisplayProps> = ({
   exchangeRate,
   showBalance,
   balance,
+  isLoading,
   onShowBalance,
   handleChange,
-  useActualRates,
+  getCurrentRates,
   useUserRates,
 }) => {
   return (
@@ -43,7 +52,7 @@ const WalletBalanceDisplay: FC<WalletBalanceDisplayProps> = ({
             inputProps={{ "aria-label": "Without label" }}
             style={{ maxHeight: "31px" }}
           >
-            <MenuItem value="">
+            <MenuItem value="ETH">
               <em>Etherium</em>
             </MenuItem>
             <MenuItem value={"Usd"}>USD</MenuItem>
@@ -51,8 +60,8 @@ const WalletBalanceDisplay: FC<WalletBalanceDisplayProps> = ({
           </Select>
         </CustomFormControl>
         <ButtonsContainer>
-          <Button onClick={useActualRates} variant="outlined" size="small">
-            Use Actual Rates
+          <Button onClick={getCurrentRates} variant="outlined" size="small">
+            Get Current Rates
           </Button>
           <Button onClick={useUserRates} variant="outlined" size="small">
             Use Custom Rates
@@ -69,11 +78,13 @@ const WalletBalanceDisplay: FC<WalletBalanceDisplayProps> = ({
 
           {showBalance ? (
             <h3>
-              {`${exchangeRate === 1 ? "ETH" : currency}: `}
+              {`${currency}: `}
               {(balance * exchangeRate).toFixed(2)}
             </h3>
+          ) : isLoading ? (
+            <CircularProgress />
           ) : (
-            <h3>....</h3>
+            <h3>********</h3>
           )}
         </BalanceInfo>
       </AccountBalance>

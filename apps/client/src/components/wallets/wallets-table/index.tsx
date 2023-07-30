@@ -10,7 +10,7 @@ interface walletsTableProps {
 
 const WalletsTable: FC<walletsTableProps> = ({ wallets }) => {
   return (
-    <>
+    <div>
       {wallets.length > 0 ? (
         wallets.map((wallet) => {
           return (
@@ -35,7 +35,7 @@ const WalletsTable: FC<walletsTableProps> = ({ wallets }) => {
       ) : (
         <h1>No Wallets</h1>
       )}
-    </>
+    </div>
   );
 };
 

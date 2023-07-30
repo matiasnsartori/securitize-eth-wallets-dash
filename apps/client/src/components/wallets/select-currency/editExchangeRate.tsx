@@ -1,34 +1,46 @@
-import { FC } from "react";
-import { Button, SelectChangeEvent, TextField } from "@mui/material";
+import { FC, useState } from "react";
+import {
+  Button,
+  CircularProgress,
+  SelectChangeEvent,
+  TextField,
+} from "@mui/material";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import { InfoBox, Topbar } from "../wallets-table/styled";
+import { Currency } from "../types";
+import DeleteWalletModal from "../deleteWalletModal";
 
-interface CurrencySelectorProps {
-  currency: "Usd" | "Euro" | "";
+interface EditExchangeRateProps {
+  currency: Currency;
   usdRate: number;
   euroRate: number;
   editUserCurrency: boolean;
   userRate: number;
+  loadingRates: boolean;
+  walletId: number;
   onCurrencyChange: (event: SelectChangeEvent) => void;
   onEditUserCurrency: () => void;
   onSaveUserRates: () => void;
   onUserRateChange: (value: number) => void;
 }
 
-const CurrencySelector: FC<CurrencySelectorProps> = ({
+const EditExchangeRate: FC<EditExchangeRateProps> = ({
   currency,
   usdRate,
   euroRate,
   editUserCurrency,
+  loadingRates,
+  walletId,
   onEditUserCurrency,
   onSaveUserRates,
   onUserRateChange,
 }) => {
+  const [openModal, setOpenModal] = useState(false);
   return (
     <InfoBox>
-      <Topbar>
+      <Topbar centered>
         <h3>Edit Exchange Rate</h3>
         {editUserCurrency ? (
           <div>
@@ -54,16 +66,39 @@ const CurrencySelector: FC<CurrencySelectorProps> = ({
           onChange={(e) => onUserRateChange(+e.target.value)}
         />
       ) : (
-        <div>
-          <h3>
-            {`${currency} Rate: ${
-              currency === "Usd" ? usdRate : currency === "Euro" ? euroRate : 1
-            }`}
-          </h3>
-        </div>
+        <>
+          <div>
+            <h3>
+              {loadingRates ? (
+                <CircularProgress />
+              ) : (
+                `${currency} Rate: ${
+                  currency === "Usd"
+                    ? usdRate
+                    : currency === "Euro"
+                    ? euroRate
+                    : 1
+                }`
+              )}
+            </h3>
+          </div>
+          <Button
+            variant="outlined"
+            color="error"
+            fullWidth
+            onClick={() => setOpenModal(true)}
+          >
+            Delete Wallet
+          </Button>
+          <DeleteWalletModal
+            setOpenModal={setOpenModal}
+            walletId={walletId}
+            open={openModal}
+          />
+        </>
       )}
     </InfoBox>
   );
 };
 
-export default CurrencySelector;
+export default EditExchangeRate;

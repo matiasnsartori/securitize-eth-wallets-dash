@@ -20,3 +20,5 @@ export interface UpdateWalletDto {
 }
 
 export type TWallets = IWallet[];
+
+export type Currency = "Euro" | "Usd" | "ETH";
