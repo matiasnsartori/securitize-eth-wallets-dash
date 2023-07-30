@@ -1,8 +1,8 @@
 import { FC, useState } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import { getBalance } from "../../../api/wallets";
 import { Currency, IWallet } from "../types";
-import { deleteWallet, getUsdRate } from "../../../api/exchange";
+import { getUsdRate } from "../../../api/exchange";
 import { SelectChangeEvent } from "@mui/material";
 import WalletBalanceDisplay from "./walletBalanceDisplay";
 import EditExchangeRate from "./editExchangeRate";
@@ -24,7 +24,6 @@ const SelectCurrency: FC<SelectCurrencyProps> = ({ wallet }) => {
   const [currency, setCurrency] = useState<Currency>("ETH");
   const [editUserCurrency, setEditUserCurrency] = useState(false);
   const [userRate, setUserRate] = useState(0);
-  const [wantToDelete, setWantToDelete] = useState(false);
 
   const { refetch, isLoading } = useQuery(
     `balance-${wallet.id}`,
