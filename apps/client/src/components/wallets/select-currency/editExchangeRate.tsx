@@ -9,8 +9,8 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import { InfoBox, Topbar } from "../wallets-table/styled";
-import { Currency } from "../types";
 import DeleteWalletModal from "../deleteWalletModal";
+import { Currency } from "../../../models/wallets";
 
 interface EditExchangeRateProps {
   currency: Currency;

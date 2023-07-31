@@ -2,7 +2,7 @@ import { Button, CircularProgress, Modal, Typography } from "@mui/material";
 import { FC } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { useMutation } from "react-query";
-import { deleteWallet } from "../../api/exchange";
+import { deleteWallet } from "../../services/exchange";
 import {
   ModalBody,
   ModalCloseButton,

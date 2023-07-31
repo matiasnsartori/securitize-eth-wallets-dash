@@ -16,7 +16,7 @@ import {
   InfoBox,
   Topbar,
 } from "../wallets-table/styled";
-import { Currency } from "../types";
+import { Currency } from "../../../models/wallets";
 
 interface WalletBalanceDisplayProps {
   currency: Currency;
