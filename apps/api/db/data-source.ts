@@ -11,7 +11,6 @@ export const dataSourceOptions: DataSourceOptions = {
   database: 'postgres',
   entities: [Wallet, Exchange],
   migrations: ['dist/db/migrations/*{.ts,.js}'],
-  synchronize: true,
 };
 
 const dataSource = new DataSource(dataSourceOptions);
