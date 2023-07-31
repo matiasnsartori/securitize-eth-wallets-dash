@@ -1,11 +1,13 @@
 import { FC, useState } from "react";
 import { useQuery } from "react-query";
-import { getBalance } from "../../../api/wallets";
-import { Currency, IWallet } from "../types";
-import { getUsdRate } from "../../../api/exchange";
+import { getBalance } from "../../../services/wallets";
+import { getRates } from "../../../services/exchange";
 import { SelectChangeEvent } from "@mui/material";
 import WalletBalanceDisplay from "./walletBalanceDisplay";
 import EditExchangeRate from "./editExchangeRate";
+import { Currency, IWallet } from "../../../models/wallets";
+import { IRates } from "../../../models/rates";
+import { ratesAdapter } from "../../../adapters/exchange";
 
 interface SelectCurrencyProps {
   wallet: IWallet;
@@ -32,7 +34,7 @@ const SelectCurrency: FC<SelectCurrencyProps> = ({ wallet }) => {
   );
   const { refetch: rates, isLoading: loadingRates } = useQuery(
     `rates`,
-    getUsdRate,
+    getRates,
     { enabled: false }
   );
 
@@ -76,14 +78,15 @@ const SelectCurrency: FC<SelectCurrencyProps> = ({ wallet }) => {
   };
 
   const useActualRates = async () => {
-    const exchangeRates = await rates();
-    setUsdRate(exchangeRates.data.usd);
-    setEuroRate(exchangeRates.data.euro);
+    const exchangeRates: IRates = (await rates()).data;
+    const adaptedRates = ratesAdapter(exchangeRates);
+    setUsdRate(adaptedRates.usd);
+    setEuroRate(adaptedRates.euro);
     if (currency === "Usd") {
-      setExchangeRate(exchangeRates.data.usd);
+      setExchangeRate(adaptedRates.usd);
     }
     if (currency === "Euro") {
-      setExchangeRate(exchangeRates.data.euro);
+      setExchangeRate(adaptedRates.euro);
     }
   };
 

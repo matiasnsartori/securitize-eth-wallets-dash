@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CreateWalletDto } from "../components/wallets/types";
+import { CreateWalletDto } from "../models/wallets";
 
 const walletsApi = axios.create({
   baseURL: "/api/wallets",

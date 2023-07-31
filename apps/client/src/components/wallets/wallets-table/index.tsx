@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { TWallets } from "../types";
 import StarIcon from "@mui/icons-material/Star";
 import { CustomAlert, ItemContainer, WalletHeader, WalletInfo } from "./styled";
 import SelectCurrency from "../select-currency";
+import { TWallets } from "../../../models/wallets";
 
 interface walletsTableProps {
   wallets: TWallets;

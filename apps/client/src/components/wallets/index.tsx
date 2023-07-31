@@ -2,13 +2,14 @@ import { FC, useState } from "react";
 
 import Addwallet from "./add-wallet";
 import { validateAddress } from "./helpers";
-import { TWallets } from "./types";
 import WalletsTable from "./wallets-table";
 import { useQuery, useMutation } from "react-query";
-import { createWallet, getWallets } from "../../api/wallets";
+import { createWallet, getWallets } from "../../services/wallets";
 import { Alert, Button, Snackbar } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
+import { TWallets } from "../../models/wallets";
+import { walletsAdapter } from "../../adapters/wallet";
 
 interface walletsProps {}
 
@@ -81,8 +82,8 @@ const Wallets: FC<walletsProps> = ({}) => {
             <WalletsTable
               wallets={
                 showSortedWallets
-                  ? sortWalletsByFavorite(walletsData)
-                  : walletsData
+                  ? sortWalletsByFavorite(walletsAdapter(walletsData))
+                  : walletsAdapter(walletsData)
               }
             />
           </>

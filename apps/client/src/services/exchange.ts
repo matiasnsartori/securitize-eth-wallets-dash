@@ -8,8 +8,9 @@ const walletsApi = axios.create({
   baseURL: "/api/wallets",
 });
 
-export const getUsdRate = async () => {
+export const getRates = async () => {
   const res = await exchangeApi.get(`/rates`);
+  console.log(res.data);
   return res.data;
 };
 
