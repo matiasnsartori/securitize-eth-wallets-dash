@@ -20,7 +20,6 @@ export class WalletsController {
 
   @Get('balance/:address')
   getBalance(@Param('address') address: string) {
-    console.log({ address });
     return this.walletsService.getBalance(address);
   }
 

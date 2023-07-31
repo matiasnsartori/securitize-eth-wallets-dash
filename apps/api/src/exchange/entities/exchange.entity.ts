@@ -1,5 +1,5 @@
-import { IsBoolean, IsNotEmpty, IsNumber, IsString } from "class-validator";
-import { Column, Entity, Generated, PrimaryGeneratedColumn } from 'typeorm';
+import { IsNumber } from 'class-validator';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Exchange {

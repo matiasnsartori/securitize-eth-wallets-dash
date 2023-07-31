@@ -1,3 +1,5 @@
+import { Exchange } from 'src/exchange/entities/exchange.entity';
+import { Wallet } from 'src/wallets/entities/wallet.entity';
 import { DataSource, DataSourceOptions } from 'typeorm';
 
 export const dataSourceOptions: DataSourceOptions = {
@@ -7,7 +9,7 @@ export const dataSourceOptions: DataSourceOptions = {
   username: 'matias',
   password: 'postgres',
   database: 'postgres',
-  entities: ['dist/**/*.entity{.ts,.js}'],
+  entities: [Wallet, Exchange],
   migrations: ['dist/db/migrations/*{.ts,.js}'],
   synchronize: true,
 };
